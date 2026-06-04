@@ -1,0 +1,17 @@
+<%- include('../partials/head') %>
+<%- include('../partials/nav') %>
+<main class="container">
+  <%- include('../partials/flash') %>
+  <div class="page-title">
+    <div>
+      <p class="eyebrow">Guru - <%= user.mata_pelajaran %></p>
+      <h1>Dashboard Guru</h1>
+    </div>
+  </div>
+  <section class="stats-grid">
+    <article><span>Total Nilai</span><strong><%= rekap.total || 0 %></strong></article>
+    <article><span>Rata-rata</span><strong><%= Number(rekap.rata || 0).toFixed(2) %></strong></article>
+    <article><span>Siswa Lulus</span><strong><%= lulus.total || 0 %></strong></article>
+  </section>
+</main>
+<%- include('../partials/footer') %>

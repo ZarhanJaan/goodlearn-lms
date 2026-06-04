@@ -1,0 +1,73 @@
+<%- include('../partials/head') %>
+<% if (!printMode) { %><%- include('../partials/nav') %><% } %>
+<main class="container report">
+  <div class="page-title">
+    <div>
+      <p class="eyebrow">Laporan</p>
+      <h1>Laporan Hasil Belajar</h1>
+      <p class="muted">Dicetak: <%= new Date().toLocaleDateString('id-ID') %></p>
+    </div>
+    <% if (!printMode) { %>
+      <div class="actions">
+        <a class="button" href="/laporan?<%= new URLSearchParams({ ...filter, format: 'excel' }).toString() %>">Ekspor Excel</a>
+        <a class="button" href="/laporan?<%= new URLSearchParams({ ...filter, format: 'pdf' }).toString() %>" target="_blank">Cetak PDF</a>
+      </div>
+    <% } %>
+  </div>
+  <% if (!printMode) { %>
+    <form class="filter-bar" method="get" action="/laporan">
+      <label>Kelas
+        <select name="kelas">
+          <option value="">Semua</option>
+          <% kelasRows.forEach((row) => { %>
+            <option value="<%= row.kelas %>" <%= filter.kelas === row.kelas ? 'selected' : '' %>><%= row.kelas %></option>
+          <% }) %>
+        </select>
+      </label>
+      <% if (user.role === 'admin') { %>
+        <label>Mata Pelajaran
+          <select name="mata_pelajaran">
+            <option value="">Semua</option>
+            <% mapelRows.forEach((row) => { %>
+              <option value="<%= row.mata_pelajaran %>" <%= filter.mata_pelajaran === row.mata_pelajaran ? 'selected' : '' %>><%= row.mata_pelajaran %></option>
+            <% }) %>
+          </select>
+        </label>
+      <% } %>
+      <label>NIS
+        <input name="nis" value="<%= filter.nis %>" placeholder="Opsional">
+      </label>
+      <button class="primary" type="submit">Tampilkan</button>
+    </form>
+  <% } %>
+  <section class="panel">
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>NIS</th><th>Nama</th><th>Kelas</th><th>Mapel</th><th>Guru</th><th>Tugas</th><th>UTS</th><th>UAS</th><th>Akhir</th><th>Status</th></tr></thead>
+        <tbody>
+          <% rows.forEach((row) => { %>
+            <tr>
+              <td><%= row.nis %></td>
+              <td><%= row.nama_siswa %></td>
+              <td><%= row.kelas %></td>
+              <td><%= row.mata_pelajaran %></td>
+              <td><%= row.nama_guru %></td>
+              <td><%= row.nilai_tugas %></td>
+              <td><%= row.nilai_uts %></td>
+              <td><%= row.nilai_uas %></td>
+              <td><strong><%= row.nilai_akhir %></strong></td>
+              <td><span class="badge <%= row.status === 'Lulus' ? 'pass' : 'fail' %>"><%= row.status %></span></td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </section>
+  <section class="summary">
+    <span>Jumlah Data: <strong><%= stats.total %></strong></span>
+    <span>Jumlah Lulus: <strong><%= stats.lulus %></strong></span>
+    <span>Rata-rata: <strong><%= stats.rata %></strong></span>
+  </section>
+</main>
+<% if (printMode) { %><script>window.print();</script><% } %>
+<%- include('../partials/footer') %>

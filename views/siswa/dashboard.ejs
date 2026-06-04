@@ -1,0 +1,34 @@
+<%- include('../partials/head') %>
+<%- include('../partials/nav') %>
+<main class="container">
+  <div class="page-title">
+    <div>
+      <p class="eyebrow">Siswa - <%= user.kelas %></p>
+      <h1>Nilai Saya</h1>
+    </div>
+  </div>
+  <section class="panel">
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Mapel</th><th>Guru</th><th>Tugas</th><th>UTS</th><th>UAS</th><th>Nilai Akhir</th><th>Status</th></tr></thead>
+        <tbody>
+          <% rows.forEach((row) => { %>
+            <tr>
+              <td><%= row.mata_pelajaran %></td>
+              <td><%= row.nama_guru %></td>
+              <td><%= row.nilai_tugas %></td>
+              <td><%= row.nilai_uts %></td>
+              <td><%= row.nilai_uas %></td>
+              <td><strong><%= row.nilai_akhir %></strong></td>
+              <td><span class="badge <%= row.status === 'Lulus' ? 'pass' : 'fail' %>"><%= row.status %></span></td>
+            </tr>
+          <% }) %>
+          <% if (!rows.length) { %>
+            <tr><td colspan="7" class="empty">Belum ada nilai yang tersedia.</td></tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>
+<%- include('../partials/footer') %>

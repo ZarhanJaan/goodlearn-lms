@@ -1,0 +1,47 @@
+<%- include('../partials/head') %>
+<%- include('../partials/nav') %>
+<main class="container">
+  <%- include('../partials/flash') %>
+  <div class="page-title">
+    <div>
+      <p class="eyebrow">Guru - <%= user.mata_pelajaran %></p>
+      <h1>Input Nilai</h1>
+    </div>
+  </div>
+  <form class="filter-bar" method="get" action="/guru/nilai">
+    <label>Kelas
+      <select name="kelas" onchange="this.form.submit()">
+        <% kelasRows.forEach((row) => { %>
+          <option value="<%= row.kelas %>" <%= row.kelas === kelas ? 'selected' : '' %>><%= row.kelas %></option>
+        <% }) %>
+      </select>
+    </label>
+  </form>
+  <form method="post" action="/guru/nilai" class="panel">
+    <input type="hidden" name="kelas" value="<%= kelas || '' %>">
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>NIS</th><th>Nama</th><th>Tugas</th><th>UTS</th><th>UAS</th><th>Akhir</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+          <% siswa.forEach((item) => { %>
+            <tr>
+              <td><%= item.nis %><input type="hidden" name="nis[]" value="<%= item.nis %>"></td>
+              <td><%= item.nama_siswa %></td>
+              <td><input class="score" type="number" min="0" max="100" step="0.01" name="nilai_tugas[]" value="<%= item.nilai_tugas ?? '' %>" required></td>
+              <td><input class="score" type="number" min="0" max="100" step="0.01" name="nilai_uts[]" value="<%= item.nilai_uts ?? '' %>" required></td>
+              <td><input class="score" type="number" min="0" max="100" step="0.01" name="nilai_uas[]" value="<%= item.nilai_uas ?? '' %>" required></td>
+              <td><%= item.nilai_akhir ?? '-' %></td>
+              <td><span class="badge <%= item.status === 'Lulus' ? 'pass' : 'fail' %>"><%= item.status || '-' %></span></td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+    <div class="actions end">
+      <button class="primary" type="submit">Simpan Nilai</button>
+    </div>
+  </form>
+</main>
+<%- include('../partials/footer') %>

@@ -1,0 +1,36 @@
+<%- include('../partials/head') %>
+<main class="login-page">
+  <section class="login-panel">
+    <div>
+      <p class="eyebrow">Learning Management System</p>
+      <h1>GoodLearn</h1>
+      <p class="muted">Masuk sebagai Admin, Guru, atau Siswa untuk mengelola dan melihat hasil belajar.</p>
+    </div>
+    <%- include('../partials/flash') %>
+    <form action="/login" method="post" class="form stack">
+      <fieldset class="role-options">
+        <legend>Login Sebagai</legend>
+        <label>
+          <input type="radio" name="role" value="admin" checked>
+          <span>Admin</span>
+        </label>
+        <label>
+          <input type="radio" name="role" value="guru">
+          <span>Guru</span>
+        </label>
+        <label>
+          <input type="radio" name="role" value="siswa">
+          <span>Siswa</span>
+        </label>
+      </fieldset>
+      <label>Username
+        <input type="text" name="username" placeholder="username admin, guru, atau siswa" required autofocus>
+      </label>
+      <label>Password
+        <input type="password" name="password" required>
+      </label>
+      <button type="submit" class="primary">Login</button>
+    </form>
+  </section>
+</main>
+<%- include('../partials/footer') %>

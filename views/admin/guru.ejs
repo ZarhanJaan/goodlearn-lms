@@ -1,0 +1,60 @@
+<%- include('../partials/head') %>
+<%- include('../partials/nav') %>
+<main class="container">
+  <%- include('../partials/flash') %>
+  <div class="page-title">
+    <div>
+      <p class="eyebrow">Admin</p>
+      <h1>Data Guru</h1>
+    </div>
+  </div>
+  <section class="split">
+    <form class="panel form stack" method="post" action="<%= edit ? '/admin/guru/' + edit.id_guru : '/admin/guru' %>">
+      <h2><%= edit ? 'Edit Guru' : 'Tambah Guru' %></h2>
+      <label>ID Guru
+        <input name="id_guru" value="<%= edit ? edit.id_guru : '' %>" <%= edit ? 'readonly' : 'required' %>>
+      </label>
+      <label>Username
+        <input name="username" value="<%= edit ? edit.username : '' %>" placeholder="username-login-guru" oninput="this.value = this.value.replace(/\s+/g, '-')" required>
+      </label>
+      <label>Nama Guru
+        <input name="nama_guru" value="<%= edit ? edit.nama_guru : '' %>" required>
+      </label>
+      <label>Mata Pelajaran
+        <input name="mata_pelajaran" value="<%= edit ? edit.mata_pelajaran : '' %>" required>
+      </label>
+      <label>Password <small><%= edit ? 'kosongkan jika tidak diubah' : 'default username jika kosong' %></small>
+        <input type="password" name="password">
+      </label>
+      <div class="actions">
+        <button class="primary" type="submit">Simpan</button>
+        <% if (edit) { %><a class="button" href="/admin/guru">Batal</a><% } %>
+      </div>
+    </form>
+    <section class="panel">
+      <h2>Daftar Guru</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>ID</th><th>Username</th><th>Nama</th><th>Mapel</th><th>Aksi</th></tr></thead>
+          <tbody>
+            <% guru.forEach((item) => { %>
+              <tr>
+                <td><%= item.id_guru %></td>
+                <td><%= item.username %></td>
+                <td><%= item.nama_guru %></td>
+                <td><%= item.mata_pelajaran %></td>
+                <td class="row-actions">
+                  <a href="/admin/guru/<%= item.id_guru %>/edit">Edit</a>
+                  <form method="post" action="/admin/guru/<%= item.id_guru %>/delete" onsubmit="return confirm('Hapus guru ini?')">
+                    <button type="submit" class="danger-link">Hapus</button>
+                  </form>
+                </td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </section>
+</main>
+<%- include('../partials/footer') %>

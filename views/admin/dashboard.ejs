@@ -1,0 +1,18 @@
+<%- include('../partials/head') %>
+<%- include('../partials/nav') %>
+<main class="container">
+  <%- include('../partials/flash') %>
+  <div class="page-title">
+    <div>
+      <p class="eyebrow">Admin</p>
+      <h1>Dashboard Admin</h1>
+    </div>
+  </div>
+  <section class="stats-grid">
+    <article><span>Total Siswa</span><strong><%= stats.siswa.total %></strong></article>
+    <article><span>Total Guru</span><strong><%= stats.guru.total %></strong></article>
+    <article><span>Record Nilai</span><strong><%= stats.nilai.total %></strong></article>
+    <article><span>Status Lulus</span><strong><%= stats.lulus.total %></strong></article>
+  </section>
+</main>
+<%- include('../partials/footer') %>

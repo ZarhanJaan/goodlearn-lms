@@ -1,0 +1,27 @@
+<header class="topbar">
+  <a class="brand" href="/"><span>GL</span> GoodLearn</a>
+  <% if (user) { %>
+    <nav class="nav">
+      <% if (user.role === 'admin') { %>
+        <a href="/admin">Dashboard</a>
+        <a href="/admin/siswa">Data Siswa</a>
+        <a href="/admin/guru">Data Guru</a>
+        <a href="/admin/akun">Kelola Admin</a>
+        <a href="/laporan">Laporan</a>
+      <% } %>
+      <% if (user.role === 'guru') { %>
+        <a href="/guru">Dashboard</a>
+        <a href="/guru/nilai">Input Nilai</a>
+        <a href="/guru/rekap">Rekap</a>
+        <a href="/laporan">Laporan</a>
+      <% } %>
+      <% if (user.role === 'siswa') { %>
+        <a href="/siswa">Nilai Saya</a>
+      <% } %>
+    </nav>
+    <form action="/logout" method="post" class="logout">
+      <span><%= user.nama %> (<%= user.role %>)</span>
+      <button type="submit">Logout</button>
+    </form>
+  <% } %>
+</header>

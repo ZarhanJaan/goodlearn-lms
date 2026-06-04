@@ -1,0 +1,32 @@
+<%- include('../partials/head') %>
+<%- include('../partials/nav') %>
+<main class="container">
+  <div class="page-title">
+    <div>
+      <p class="eyebrow">Guru</p>
+      <h1>Rekap Nilai</h1>
+    </div>
+  </div>
+  <section class="panel">
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>NIS</th><th>Nama</th><th>Kelas</th><th>Tugas</th><th>UTS</th><th>UAS</th><th>Akhir</th><th>Status</th></tr></thead>
+        <tbody>
+          <% rows.forEach((row) => { %>
+            <tr>
+              <td><%= row.nis %></td>
+              <td><%= row.nama_siswa %></td>
+              <td><%= row.kelas %></td>
+              <td><%= row.nilai_tugas %></td>
+              <td><%= row.nilai_uts %></td>
+              <td><%= row.nilai_uas %></td>
+              <td><strong><%= row.nilai_akhir %></strong></td>
+              <td><span class="badge <%= row.status === 'Lulus' ? 'pass' : 'fail' %>"><%= row.status %></span></td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>
+<%- include('../partials/footer') %>
